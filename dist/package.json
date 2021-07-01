@@ -1,0 +1,17 @@
+{
+  "name": "receeve",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "ChuksGPFR",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "yarn tsc && node ./dist/index.js",
+    "watch": "tsc -w"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.936.0",
+    "dotenv": "^10.0.0",
+    "uuid": "^8.3.2"
+  }
+}

@@ -1,0 +1,57 @@
+# Resources:
+#   MailgunTable:
+#     Type: AWS::DynamoDB::Table
+#     Properties:
+#       TableName: webhookDb
+#       AttributeDefinitions:
+#         - AttributeName: "id"
+#           AttributeType: "S"
+#         - AttributeName: "meta"
+#           AttributeType: "S"
+#       KeySchema:
+#         - AttributeName: "id"
+#           KeyType: "HASH"
+#       TimeToLiveSpecification:
+#         AttributeName: "ExpirationTime"
+#         Enabled: true
+#       ProvisionedThroughput:
+#         ReadCapacityUnits: "10"
+#         WriteCapacityUnits: "5"
+#     DependsOn:
+#       - Policy
+
+#   Policy:
+#     Type: "AWS::IAM::Policy"
+#     Properties:
+#       PolicyName: mailgunWebhookPolicy
+#       PolicyDocument:
+#         Version: "2012-10-17"
+#         Statement:
+#           - Effect: "Allow"
+#             Action: "dynamodb:Query"
+#             Resource: "*"
+#       Roles:
+#         - Ref: "OrdersTableQueryRole"
+
+#   OrdersTableQueryRole:
+#     Type: "AWS::IAM::Role"
+#     Properties:
+#       AssumeRolePolicyDocument:
+#         Version: "2012-10-17"
+#         Statement:
+#           - Effect: "Allow"
+#             Principal:
+#               Service:
+#                 - "dynamodb.amazonaws.com"
+#             Action:
+#               - "sts:AssumeRole"
+#       Path: "/"
+# Resources:
+#   MailgunWebhook:
+#     Type: AWS::Serverless::Function
+#     Properties:
+#       CodeUri: /dist
+#       Handler: index.handler
+#       Roles:
+#         - Ref: "OrdersTableQueryRole"
+      
